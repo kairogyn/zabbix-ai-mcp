@@ -25,6 +25,18 @@ class ZabbixMCP extends McpAgent {
         password: process.env.ZABBIX_PASSWORD
       };
     }
+
+    // Add health check endpoint
+    this.server.tool(
+      "health",
+      "Health check endpoint",
+      {},
+      async () => {
+        return {
+          content: [{ type: "text", text: "OK" }]
+        };
+      }
+    );
   }
 
   async init() {
