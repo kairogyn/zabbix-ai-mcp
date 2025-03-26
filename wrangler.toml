@@ -1,0 +1,12 @@
+name = "zabbix-mcp"
+main = "src/index.js"
+compatibility_date = "2024-03-25"
+
+[build]
+command = "npm install"
+
+[env.production]
+vars = { }
+
+[env.development]
+vars = { } 

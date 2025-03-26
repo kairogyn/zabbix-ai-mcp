@@ -1,0 +1,20 @@
+{
+  "name": "zabbix-mcp",
+  "version": "1.0.0",
+  "description": "Zabbix MCP Server for AI Agents",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
+  },
+  "dependencies": {
+    "@cloudflare/workers-oauth-provider": "^1.0.0",
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "zod": "^3.22.4",
+    "axios": "^1.6.7"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.3"
+  }
+} 
