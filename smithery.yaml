@@ -1,0 +1,33 @@
+startCommand:
+  type: stdio
+  configSchema:
+    type: object
+    properties:
+      zabbixUrl:
+        type: string
+        description: "Zabbix API URL"
+        format: uri
+      zabbixUser:
+        type: string
+        description: "Zabbix API username"
+      zabbixPassword:
+        type: string
+        description: "Zabbix API password"
+        format: password
+      debugMode:
+        type: boolean
+        description: "Enable debug mode"
+        default: false
+    required: ["zabbixUrl", "zabbixUser", "zabbixPassword"]
+  commandFunction: |
+    (config) => ({
+      "command": "node",
+      "args": ["src/index.js"],
+      "env": {
+        "ZABBIX_URL": config.zabbixUrl,
+        "ZABBIX_USER": config.zabbixUser,
+        "ZABBIX_PASSWORD": config.zabbixPassword,
+        "DEBUG": config.debugMode ? "true" : "false",
+        "NODE_ENV": "production"
+      }
+    }) 

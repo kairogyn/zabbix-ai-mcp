@@ -16,6 +16,15 @@ class ZabbixMCP extends McpAgent {
       version: "1.0.0",
       description: "MCP server for interacting with Zabbix monitoring system"
     });
+
+    // Initialize Zabbix configuration from environment variables
+    if (process.env.ZABBIX_URL && process.env.ZABBIX_USER && process.env.ZABBIX_PASSWORD) {
+      this.state.zabbixConfig = {
+        url: process.env.ZABBIX_URL,
+        user: process.env.ZABBIX_USER,
+        password: process.env.ZABBIX_PASSWORD
+      };
+    }
   }
 
   async init() {
@@ -437,14 +446,9 @@ class ZabbixMCP extends McpAgent {
   }
 }
 
-// Create and export the MCP server with OAuth provider
-export default new OAuthProvider({
-  apiRoute: "/sse",
-  apiHandler: new ZabbixMCP().server.mount('/sse'),
-  defaultHandler: async (c) => {
-    return new Response("Welcome to Zabbix MCP Server");
-  },
-  authorizeEndpoint: "/authorize",
-  tokenEndpoint: "/token",
-  clientRegistrationEndpoint: "/register"
+// Initialize the server
+const server = new ZabbixMCP();
+server.start().catch(error => {
+  console.error("Server initialization error:", error);
+  process.exit(1);
 }); 
